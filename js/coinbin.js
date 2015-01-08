@@ -195,28 +195,35 @@ $(document).ready(function() {
 					$("#inputs .txidRemove, #inputs .txidClear").click();
 				}
 
-				$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://btc.blockr.io/address/info/'+addr+'" target="_blank">'+addr+'</a>');
+				$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://www.blockchain.info/address/'+addr+'" target="_blank">'+addr+'</a>');
 
-				$.each($(data).find("unspent").children(), function(i,o){
+				try {
+					var utxo = JSON.parse(data);
+					utxo.unspent_outputs.forEach(function(element, index, obj) {
+						if (element.confirmations > 0) {
 
-					if($("#inputs .txId:last").val()!=""){
-						$("#inputs .txidAdd").click();
-					}
+							if($("#inputs .txId:last").val()!=""){
+								$("#inputs .txidAdd").click();
+							}
 
-					$("#inputs .row:last input").attr('disabled',true);
+							$("#inputs .row:last input").attr('disabled',true);
 
-					var val = (($(o).find("value").text()*1)/100000000);
-					var txid = (($(o).find("tx_hash").text()).match(/.{1,2}/g).reverse()).join("")+'';
+							var val = (element.value / 100000000);
+							var txid = (element.tx_hash.match(/.{1,2}/g).reverse()).join('') + '';
 
-					$("#inputs .txId:last").val(txid);
-					$("#inputs .txIdN:last").val($(o).find("tx_output_n").text());
-					$("#inputs .txIdAmount:last").val(val.toFixed(8));
-					if(isMultiSig==true){
-						$("#inputs .txIdScript:last").val(s);
-					} else {
-						$("#inputs .txIdScript:last").val($(o).find("script").text());
-					}
-				});
+							$("#inputs .txId:last").val(txid);
+							$("#inputs .txIdN:last").val(element.tx_output_n);
+							$("#inputs .txIdAmount:last").val(val.toFixed(8));
+							if(isMultiSig==true){
+								$("#inputs .txIdScript:last").val(s);
+							} else {
+								$("#inputs .txIdScript:last").val(element.script);
+							}
+						}
+					});
+				} catch(e) {
+					$("#redeemFromStatus, #redeemFromAddress").addClass('hidden');
+				}
 			}
 
 			$(thisbtn).html("Load").attr('disabled',false);
@@ -282,10 +289,9 @@ $(document).ready(function() {
 		var tx = coinjs.transaction();
 		$(thisbtn).val('Please wait, loading...').attr('disabled',true);
 		tx.broadcast(function(data){
-			$("#rawTransactionStatus").html(unescape($(data).find("response").text()).replace(/\+/g,' ')).removeClass('hidden');
-			if($(data).find("result").text()==1){
+			$("#rawTransactionStatus").html(data).removeClass('hidden');
+			if (data.lastIndexOf('Transaction Submitted') === 0){
 				$("#rawTransactionStatus").addClass('alert-success').removeClass('alert-danger');
-				$("#rawTransactionStatus").html('txid: '+$(data).find("txid").text());
 			} else {
 				$("#rawTransactionStatus").addClass('alert-danger').removeClass('alert-success').prepend('<span class="glyphicon glyphicon-exclamation-sign"></span> ');
 			}

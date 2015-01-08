@@ -14,9 +14,7 @@
 	coinjs.compressed = false;
 
 	/* bit(coinb.in) api vars */
-	coinjs.host = ('https:'==document.location.protocol?'https://':'http://')+'coinb.in/api/';
-	coinjs.uid = '1';
-	coinjs.key = '12345678901234567890123456789012';
+	coinjs.host = 'https://blockchain.info/';
 
 	/* start of address functions */
 
@@ -232,11 +230,6 @@
 		} catch(e) {
 			return false;
 		}
-	}
-
-	/* retreive the balance from a given address */
-	coinjs.addressBalance = function(address, callback){
-		coinjs.ajax(coinjs.host+'?uid='+coinjs.uid+'&key='+coinjs.key+'&setmodule=addresses&request=bal&address='+address+'&r='+Math.random(), callback, "GET");
 	}
 
 	/* decompress an compressed public key */
@@ -607,63 +600,13 @@
 
 		/* list unspent transactions */
 		r.listUnspent = function(address, callback) {
-			coinjs.ajax(coinjs.host+'?uid='+coinjs.uid+'&key='+coinjs.key+'&setmodule=addresses&request=unspent&address='+address+'&r='+Math.random(), callback, "GET");
-		}
-
-		/* add unspent to transaction */
-		r.addUnspent = function(address, callback){
-			var self = this;
-			this.listUnspent(address, function(data){
-				var s = coinjs.script();
-				var pubkeyScript = s.pubkeyHash(address);
-				var value = 0;
-				var total = 0;
-				var x = {};
-
-				if (window.DOMParser) {
-					parser=new DOMParser();
-					xmlDoc=parser.parseFromString(data,"text/xml");
-				} else {
-					xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-					xmlDoc.async=false;
-					xmlDoc.loadXML(data);
-				}
-
-				var unspent = xmlDoc.getElementsByTagName("unspent")[0];
-
-				for(i=1;i<=unspent.childElementCount;i++){
-					var u = xmlDoc.getElementsByTagName("unspent_"+i)[0]
-					var txhash = (u.getElementsByTagName("tx_hash")[0].childNodes[0].nodeValue).match(/.{1,2}/g).reverse().join("")+'';
-					var n = u.getElementsByTagName("tx_output_n")[0].childNodes[0].nodeValue;
-					var script = u.getElementsByTagName("script")[0].childNodes[0].nodeValue;
-
-					self.addinput(txhash, n, script);
-
-					value += u.getElementsByTagName("value")[0].childNodes[0].nodeValue*1;
-					total++;
-				}
-
-				x.unspent = $(xmlDoc).find("unspent");
-				x.value = value;
-				x.total = total;
-				return callback(x);
-			});
-		}
-
-		/* add unspent and sign */
-		r.addUnspentAndSign = function(wif, callback){
-			var self = this;
-			var address = coinjs.wif2address(wif);
-			self.addUnspent(address['address'], function(data){
-				self.sign(wif);
-				return callback(data);
-			});
+			coinjs.ajax(coinjs.host + 'unspent?active=' + address + '&cors=true', callback, "GET");
 		}
 
 		/* broadcast a transaction */
 		r.broadcast = function(callback, txhex){
-			var tx = txhex || this.serialize();
-			coinjs.ajax(coinjs.host+'?uid='+coinjs.uid+'&key='+coinjs.key+'&setmodule=bitcoin&request=sendrawtransaction&rawtx='+tx+'&r='+Math.random(), callback, "GET");
+			var tx = 'tx=' + (txhex || this.serialize());
+			coinjs.ajax(coinjs.host + 'pushtx?cors=true', callback, "POST", tx);
 		}
 
 		/* generate the transaction hash to sign from a transaction input */

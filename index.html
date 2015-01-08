@@ -2,11 +2,11 @@
 <html lang="en">
 	<head>
 
-		<title>Bitcoin Wallet by Coinb.in</title>
+		<title>Bitcoin Multisig Support</title>
 
         	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-		<meta name="keywords" content="bitcoin, wallet, multisig, multisignature, address, browser, javascript, js, broadcast, transaction, verify, decode" />
-		<meta name="description" content="A Bitcoin Wallet written in Javascript. Supports Multisig, Custom Transactions, nLockTime and more!" />
+		<meta name="keywords" content="bitcoin, multisig, multisignature, address, browser, javascript, js, broadcast, transaction, verify, decode" />
+		<meta name="description" content="Bitcoin Multisig support functions written in Javascript." />
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,17 +35,9 @@
 			<!-- Fixed navbar -->
 			<div id="header" class="navbar navbar-default " role="navigation">
 				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a href="#home" class="navbar-brand" id="homeBtn"><b><img src="images/coinbin.gif" style="height:25px;margin-top:-5px"></b></a>
-					</div>
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
+							<li class="active"><a href="#about" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> New<b class="caret"></b></a>
 								<ul class="dropdown-menu">
@@ -58,9 +50,6 @@
 							<li><a href="#verify" data-toggle="tab"><span class="glyphicon glyphicon-ok"></span> Verify</a></li>
 							<li><a href="#sign" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Sign</a></li>
 							<li><a href="#broadcast" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Broadcast</a></li>
-							<li><a href="https://localbitcoins.com/?ch=173j" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Buy &amp; Sell</a></li>
-						<!--	<li><a href="#dev" data-toggle="tab"><span class="glyphicon glyphicon-wrench"></span> Dev</a></li>
-						-->	<li><a href="#about" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
 						</ul>
 					</div>
 				</div>
@@ -71,114 +60,6 @@
 				<noscript class="alert alert-danger center-block"><span class="glyphicon glyphicon-exclamation-sign"></span> This page uses javascript, please enable it to continue!</noscript>
 
 				<div class="tab-content">
-					<div class="tab-pane tab-content active" id="home">
-						<div class="row">
-							<div class="col-md-12">
-								<h2>Open Wallet <small> browser based bitcoin wallet</small></h2>
-								<div id="openLogin">
-									<form class="form-signin" role="form" action="javascript:;">
-
-										<p>Use the form below to open a wallet and begin using this service.</p>
-
-										<div class="alert alert-warning">
-											<b>Notice</b>: Different email address and password combination will open different wallets, be careful when entering your details as lost accounts can not be recovered! 
-										</div>
-
-										<input id="openEmail" type="email" class="form-control" placeholder="Email address" required autofocus>
-										<input id="openPass" type="password" class="form-control" placeholder="Password" required>
-										<input id="openPassConfirm" type="password" class="form-control" placeholder="Password confirm" required>
-										<br>
-										<div id="openLoginStatus" class="alert alert-danger hidden"></div>
-										<button id="openBtn" class="btn btn-lg btn-primary btn-block" type="submit">Open</button>
-									</form>
-								</div>
-
-								<div id="openWallet" class="hidden">
-									<div class="row">
-										<div class="col-md-12">
-											<p><span style="float:right;"><a href="javascript:;" id="walletLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>Welcome to your wallet, enjoy your stay!</p>
-										</div>
-										<div class="col-md-12" align="center">
-											<div id="walletQrCode"></div> <br>
-											<div>
-												<span id="walletLoader" class="hidden"><img src="images/loader.gif"></span>
-												<span id="walletAddress"></span>
-											</div>
-											<br>
-											<div style="text-align:center; width:350px;">
-												<ul class="nav nav-pills" role="tablist">
-													<li role="presentation" class="active"><a href="javascript:;" id="walletBalance">0.00 BTC</a></li>
-													<li role="presentation"><a href="javascript:;" id="walletShowSpend">Spend</a></li>
-													<li role="presentation"><a id="walletHistory" href="javascript:;" target="_blank">History</a></li>
-													<li role="presentation"><a href="javascript:;" id="walletShowKeys">Keys</a></li>
-												</ul>
-
-												<br>
-
-												<div id="walletKeys" class="hidden">
-													<label>Public Key</label>
-													<input class="form-control pubkey" type="text" readonly>
-													<label>Private key</label>
-													<div class="input-group">
-														<input class="form-control privkey" type="password" readonly>
-
-														<span class="input-group-btn">
-															<button class="showKey btn btn-default" type="button">Show</button>
-														</span>
-													</div>
-												</div>
-
-												<div id="walletSpend" class="hidden">
-													<div class="row">
-														<div class="form-inline output">
-															<div class="col-xs-8">
-																<label>Address</label>
-															</div>
-
-															<div class="col-xs-3">
-																<label>Amount</label>
-															</div>
-														</div>
-													</div>
-													<div class="row" id="walletSpendTo">
-														<div class="form-inline output">
-															<div class="col-xs-8">
-																<input type="text" class="form-control addressTo" data-original-title="" title="">
-															</div>
-															<div class="col-xs-3">
-																<input type="text" class="form-control amount" data-original-title="" title="" placeholder="0.00">
-
-															</div>
-
-															<a href="javascript:;" class="addressAdd"><span class="glyphicon glyphicon-plus"></span></a>
-															<br><br>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-xs-6">
-															<label><abbr title="the amount to pay in network miner fees - 0.0001 or more recommended">Transaction Fee</abbr></label>
-															<input type="text" class="form-control" value="0.00001" id="txFee">
-														</div>
-														<div class="col-xs-5">
-															<label><abbr title="the amount to donate to the sites developer">Donation</abbr></label>
-															<input type="text" class="form-control" value="0.00" id="developerDonation">
-														</div>
-													</div>
-													<br>
-
-													<div id="walletSendStatus" class="alert alert-danger hidden"></div>
-
-													<button class="btn btn-primary" type="button" id="walletSendBtn">Send</button>
-													<button class="btn btn-default" type="button">Reset</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
 					<div class="tab-pane tab-content" id="newAddress">
 						<h2>New Address <small>create a new address</small></h2>
 						<p>Any keys used you will need to manually store safely as they will be needed later to redeem the bitcoins.</p>
@@ -571,18 +452,16 @@
 
 					</div>
 
-					<div class="tab-pane tab-content" id="about">
-						<h2>About <small>open source bitcoin wallet</small></h2>
-						<p>Version 1.0 beta by <a href="https://bitcointalk.org/index.php?action=profile;u=34834" target="_blank">OutCast3k</a></p>
+					<div class="tab-pane tab-content active" id="about">
+						<h2>About <small>open source bitcoin multisig support</small></h2>
+						<p>Version 1.0 beta by <a href="https://bitcointalk.org/index.php?action=profile;u=17239" target="_blank">real1510</a></p>
 						<p>Compatible with bitcoin-qt</p>
-						<p>Github <a href="https://github.com/OutCast3k/coinbin/">https://github.com/OutCast3k/coinbin/</a></p>
-						<p>TOR <a href="http://4zpinp6gdkjfplhk.onion">4zpinp6gdkjfplhk.onion</a></p>
-						<br>
-						<p>Donate 1CWHWkTWaq1K5hevimJia3cyinQsrgXUvg</p>
+						<p>Forked from the original version by <a href="https://bitcointalk.org/index.php?action=profile;u=34834" target="_blank">OutCast3k</a></p>
+						<p>Github <a href="https://github.com/real1510/multisig/">https://github.com/real1510/multisig/</a></p>
 					</div>
 
 					<br>
-					<p class="text-muted">This page uses javascript to generate your addresses and sign your transactions within your browser, this means we <i>never</i> receive your private keys, this can be indepently verified by reviewing the source code on <a href="https://github.com/OutCast3k/coinbin/" target="_blank">github</a>. You can even <a href="https://github.com/OutCast3k/coinbin/archive/master.zip">download</a> this page and host it yourself or run it offline!</p>
+					<p class="text-muted">This page uses javascript to generate your addresses and sign your transactions within your browser, this means we <i>never</i> receive your private keys, this can be indepently verified by reviewing the source code on <a href="https://github.com/real1510/multisig/" target="_blank">github</a>. You can even <a href="https://github.com/real1510/multisig/archive/master.zip">download</a> this page and host it yourself or run it offline!</p>
 					<br>
 
 				</div>
@@ -595,31 +474,6 @@
 			</div>
 		</div>
 
-
-	<!-- wallet confirm send modal -->
-	<div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Please confirm</h4>
-				</div>
-
-				<div class="modal-body">
-					<p>You are about to send a transaction to the value of <span id="spendAmount">0.00</span> BTC</p>
-
-					<br>
-					<div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal" id="confirmClose">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- wallet confirm send modal -->
 
 	<!-- qrcode modal -->
 	<div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

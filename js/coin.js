@@ -1,8 +1,6 @@
 /*
- Coinjs 0.01 beta by OutCast3k{at}gmail.com
+ Coinjs 0.01 beta original by OutCast3k{at}gmail.com
  A bitcoin framework loosely based on bitcoinjs.
-
- http://github.com/OutCast3k/coinjs or http://coinb.in/coinjs
 */
 
 (function () {
@@ -14,9 +12,6 @@
 	coinjs.priv = 0x80;
 	coinjs.multisig = 0x05;
 	coinjs.compressed = false;
-
-	/* other vars */
-	coinjs.developer = '1CWHWkTWaq1K5hevimJia3cyinQsrgXUvg';
 
 	/* bit(coinb.in) api vars */
 	coinjs.host = ('https:'==document.location.protocol?'https://':'http://')+'coinb.in/api/';
@@ -48,7 +43,7 @@
 		x += window.history.length;
 		x += coinjs.random(64);
 		x += navigator.userAgent;
-		x += 'coinb.in';
+		x += 'Bitcoin Multisig Tool';
 		x += (Crypto.util.randomBytes(64)).join("");
 		x += x.length;
 		var dateObj = new Date();

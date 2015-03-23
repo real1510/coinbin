@@ -62,7 +62,7 @@ $(document).ready(function() {
 
 	$("#multisigPubKeys .pubkeyAdd").click(function(){
 		if($("#multisigPubKeys .pubkeyRemove").length<14){
-			var clone = '<div class="form-inline">'+$(this).parent().html()+'</div>';
+			var clone = '<div class="form-horizontal">'+$(this).parent().html()+'</div>';
 			$("#multisigPubKeys").append(clone);
 			$("#multisigPubKeys .glyphicon-plus:last").removeClass('glyphicon-plus').addClass('glyphicon-minus');
 			$("#multisigPubKeys .glyphicon-minus:last").parent().removeClass('pubkeyAdd').addClass('pubkeyRemove');
@@ -328,6 +328,7 @@ $(document).ready(function() {
 				$('<tr><td><input type="text" class="form-control" value="'+decode.pubkeys[i]+'" readonly></td></tr>').appendTo("#verifyRsData table tbody");
 			}
 			$("#verifyRsData").removeClass("hidden");
+			$(".verifyLink").attr('href','?verify='+$("#verifyScript").val());
 			return true;
 		} else {
 			return false;
@@ -409,6 +410,7 @@ $(document).ready(function() {
 			});
 			$(h).appendTo("#verifyTransactionData .outs tbody");
 
+			$(".verifyLink").attr('href','?verify='+$("#verifyScript").val());
 			return true;
 		} catch(e) {
 			return false;
@@ -451,6 +453,7 @@ $(document).ready(function() {
 			try {
 				$("#verifyPubKey .address").val(coinjs.pubkey2address(pubkey));
 				$("#verifyPubKey").removeClass("hidden");
+				$(".verifyLink").attr('href','?verify='+$("#verifyScript").val());
 				return true;
 			} catch (e) {
 				return false;

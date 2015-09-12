@@ -73,6 +73,34 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#mediatorList").change(function(){
+		var data = ($(this).val()).split(";");
+		$("#mediatorPubkey").val(data[0]);
+		$("#mediatorEmail").val(data[1]);
+		$("#mediatorFee").val(data[2]);
+	}).change();
+
+	$("#mediatorAddKey").click(function(){
+		var count = 0;
+		var len = $(".pubkeyRemove").length;
+		if(len<14){
+			$.each($("#multisigPubKeys .pubkey"),function(i,o){
+				if($(o).val()==''){
+					$(o).val($("#mediatorPubkey").val()).fadeOut().fadeIn();
+					$("#mediatorClose").click();
+					return false;
+				} else if(count==len){
+					$("#multisigPubKeys .pubkeyAdd").click();
+					$("#mediatorAddKey").click();
+					return false;
+				}
+				count++;
+			});
+
+			$("#mediatorClose").click();
+		}
+	});
+
 	/* new -> transaction code */
 
 	$("#recipients .addressAddTo").click(function(){
@@ -114,13 +142,29 @@ $(document).ready(function() {
 	$("#transactionBtn").click(function(){
 		var tx = coinjs.transaction();
 
+		$("#transactionCreate, #transactionCreateStatus").addClass("hidden");
+
 		if(($("#nLockTime").val()).match(/^[0-9]+$/g)){
 			tx.lock_time = $("#nLockTime").val()*1;
 		}
 
+		$("#inputs .row").removeClass('has-error');
+
+		$('#putTabs a[href="#txinputs"], #putTabs a[href="#txoutputs"]').attr('style','');
+
 		$.each($("#inputs .row"), function(i,o){
-			if($(".txId",o).val()!="" && $(".txIdN",o).val()!=""){
+			if(!($(".txId",o).val()).match(/^[a-f0-9]+$/i)){
+				$(o).addClass("has-error");
+			} else if((!($(".txIdScript",o).val()).match(/^[a-f0-9]+$/i)) && $(".txIdScript",o).val()!=""){
+				$(o).addClass("has-error");
+			} else if (!($(".txIdN",o).val()).match(/^[0-9]+$/i)){
+				$(o).addClass("has-error");
+			}
+
+			if(!$(o).hasClass("has-error")){
 				tx.addinput($(".txId",o).val(), $(".txIdN",o).val(), $(".txIdScript",o).val());
+			} else {
+				$('#putTabs a[href="#txinputs"]').attr('style','color:#a94442;');
 			}
 		});
 
@@ -137,13 +181,24 @@ $(document).ready(function() {
 				tx.adddata(a);
 			} else { // neither address nor data
 				$(o).addClass('has-error');
+				$('#putTabs a[href="#txoutputs"]').attr('style','color:#a94442;');
 			}
 		});
 
-		$("#transactionCreate textarea").val(tx.serialize());
-		$("#transactionCreate .txSize").html(tx.size());
 
-		$("#transactionCreate").removeClass("hidden");
+		if(!$("#recipients .row, #inputs .row").hasClass('has-error')){
+			$("#transactionCreate textarea").val(tx.serialize());
+			$("#transactionCreate .txSize").html(tx.size());
+
+			$("#transactionCreate").removeClass("hidden");
+
+			if($("#transactionFee").val()>=0.01){
+				$("#modalWarningFeeAmount").html($("#transactionFee").val());
+				$("#modalWarningFee").modal("show");
+			}
+		} else {
+			$("#transactionCreateStatus").removeClass("hidden").html("One or more input or output is invalid").fadeOut().fadeIn();
+		}
 	});
 
 	$(".txidClear").click(function(){

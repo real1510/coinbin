@@ -35,18 +35,6 @@
 			<!-- Fixed navbar -->
 			<div id="header" class="navbar navbar-default " role="navigation">
 				<div class="container">
-<<<<<<< HEAD
-=======
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a href="#home" class="navbar-brand" id="homeBtn"><img src="images/coinbin.gif" style="height:25px;margin-top:-5px"></a>
-					</div>
->>>>>>> 235ae93... updated to the new bootstrap, given the home page a make over and a few other minor tweaks
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="#about" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
@@ -62,11 +50,6 @@
 							<li><a href="#verify" data-toggle="tab"><span class="glyphicon glyphicon-ok"></span> Verify</a></li>
 							<li><a href="#sign" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Sign</a></li>
 							<li><a href="#broadcast" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Broadcast</a></li>
-<<<<<<< HEAD
-=======
-							<li><a href="#wallet" data-toggle="tab"><span class="glyphicon glyphicon-briefcase"></span> Wallet</a></li>
-							<li><a href="#about" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
->>>>>>> 235ae93... updated to the new bootstrap, given the home page a make over and a few other minor tweaks
 						</ul>
 					</div>
 				</div>
@@ -77,169 +60,6 @@
 				<noscript class="alert alert-danger center-block"><span class="glyphicon glyphicon-exclamation-sign"></span> This page uses javascript, please enable it to continue!</noscript>
 
 				<div class="tab-content">
-<<<<<<< HEAD
-=======
-					<div class="tab-pane tab-content active" id="home">
-						<div class="row">
-							<div class="col-md-12">
-								<h2>Coinb.in <small>Welcome to the Blockchain</small></h2>
-							</div>
-						</div>
-
-						<div class="jumbotron">
-							<h1>Bitcoin. It's your money!</h1>
-							<p>Be your own bank, take control of your own money and start using Bitcoin today!</p>
-							<p><a class="btn btn-primary btn-lg" href="#about" role="button">Learn more &raquo;</a></p>
-						</div>
-
-						<hr>
-
-						<div class="row">
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-ok"></span> Open Source</h3>
-								<p>Coinbin is an open source web based wallet written in javascript and released under the <a href="LICENCE">MIT licence</a> which means its free to use and edit.</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-fullscreen"></span> MultiSig</h3>
-								<p>We offer a fully transparent <a href="#newMultiSig">multisig</a> solution which works seamlessly offline and with other bitcoin clients.</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-bitcoin"></span> Raw Transactions</h3>
-								<p><a href="#newTransaction">Create</a>, <a href="#verify">verify</a>, <a href="#sign">sign</a> and <a href="#broadcast">broadcast</a> custom raw transactions online with advanced features and minimal effort!</p>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-piggy-bank"></span> Wallet</h3>
-								<p>Quick access to an <a href="#wallet">online wallet</a> where only you have access to your own private keys!</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-globe"></span> Addresses</h3>
-								<p>We support <a href="#newAddress">regular addresses</a> but also <a href="#newMultiSig">multisig</a> and stealth, and access to your own private keys!</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-wrench"></span>  Development</h3>
-								<p>Use what we've built to write your own projects! See our documention (coming soon), or contribute at <a href="https://github.com/OutCast3k/coinbin/">github</a>.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="tab-pane tab-content" id="wallet">
-						<div class="row">
-							<div class="col-md-12">
-								<h2>Open Wallet <small> browser based bitcoin wallet</small></h2>
-								<div id="openLogin">
-									<form class="form-signin" role="form" action="javascript:;">
-
-										<p>Use the form below to open a wallet and begin using this service.</p>
-
-										<div class="alert alert-warning">
-											<b>Notice</b>: Different email address and password combination will open different wallets, be careful when entering your details as lost accounts can not be recovered! 
-										</div>
-
-										<input id="openEmail" type="email" class="form-control" placeholder="Email address" required autofocus>
-										<input id="openPass" type="password" class="form-control" placeholder="Password" required>
-										<input id="openPassConfirm" type="password" class="form-control" placeholder="Password confirm" required>
-										<br>
-										<div id="openLoginStatus" class="alert alert-danger hidden"></div>
-										<button id="openBtn" class="btn btn-primary" type="submit">Submit</button>
-									</form>
-								</div>
-
-								<div id="openWallet" class="hidden">
-									<div class="row">
-										<div class="col-md-12">
-											<p><span style="float:right;"><a href="javascript:;" id="walletLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>Welcome to your wallet, enjoy your stay!</p>
-										</div>
-										<div class="col-md-12" align="center">
-											<div id="walletQrCode"></div> <br>
-											<div>
-												<span id="walletLoader" class="hidden"><img src="images/loader.gif"></span>
-												<span id="walletAddress"></span>
-											</div>
-											<br>
-											<div style="text-align:center; width:350px;">
-												<ul class="nav nav-pills" role="tablist">
-													<li role="presentation" class="active"><a href="javascript:;" id="walletBalance">0.00 BTC</a></li>
-													<li role="presentation"><a href="javascript:;" id="walletShowSpend">Spend</a></li>
-													<li role="presentation"><a id="walletHistory" href="javascript:;" target="_blank">History</a></li>
-													<li role="presentation"><a href="javascript:;" id="walletShowKeys">Keys</a></li>
-												</ul>
-
-												<br>
-
-												<div id="walletKeys" class="hidden">
-													<label>Public Key</label>
-													<input class="form-control pubkey" type="text" readonly>
-													<label>Private key</label>
-													<div class="input-group">
-														<input class="form-control privkey" type="password" readonly>
-
-														<span class="input-group-btn">
-															<button class="showKey btn btn-default" type="button">Show</button>
-														</span>
-													</div>
-													<label>Private Key (AES256 encrypted key)</label>
-													<input class="form-control privkeyaes" type="text" readonly>
-												</div>
-
-												<div id="walletSpend" class="hidden">
-													<div class="row">
-														<div class="form-inline output">
-															<div class="col-xs-8">
-																<label>Address</label>
-															</div>
-
-															<div class="col-xs-3">
-																<label>Amount</label>
-															</div>
-														</div>
-													</div>
-													<div class="row" id="walletSpendTo">
-														<div class="form-inline output">
-															<div class="col-xs-8">
-																<input type="text" class="form-control addressTo" data-original-title="" title="">
-															</div>
-															<div class="col-xs-3">
-																<input type="text" class="form-control amount" data-original-title="" title="" placeholder="0.00">
-
-															</div>
-
-															<a href="javascript:;" class="addressAdd"><span class="glyphicon glyphicon-plus"></span></a>
-															<br><br>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-xs-6">
-															<label><abbr title="the amount to pay in network miner fees - 0.0001 or more recommended">Transaction Fee</abbr></label>
-															<input type="text" class="form-control" value="0.00001" id="txFee">
-														</div>
-														<div class="col-xs-5">
-															<label><abbr title="the amount to donate to the sites developer">Donation</abbr></label>
-															<input type="text" class="form-control" value="0.00" id="developerDonation">
-														</div>
-													</div>
-													<br>
-
-													<div id="walletSendStatus" class="alert alert-danger hidden"></div>
-
-													<button class="btn btn-primary" type="button" id="walletSendBtn">Send</button>
-													<button class="btn btn-default" type="button">Reset</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
->>>>>>> 235ae93... updated to the new bootstrap, given the home page a make over and a few other minor tweaks
 					<div class="tab-pane tab-content" id="newAddress">
 						<h2>New Address <small>create a new address</small></h2>
 						<p>Any keys used you will need to manually store safely as they will be needed later to redeem the bitcoins.</p>
@@ -633,28 +453,12 @@
 						
 					</div>
 
-<<<<<<< HEAD
 					<div class="tab-pane tab-content active" id="about">
 						<h2>About <small>open source bitcoin multisig support</small></h2>
 						<p>Version 1.0 beta by <a href="https://bitcointalk.org/index.php?action=profile;u=17239" target="_blank">real1510</a></p>
 						<p>Compatible with bitcoin-qt</p>
 						<p>Forked from the original version by <a href="https://bitcointalk.org/index.php?action=profile;u=34834" target="_blank">OutCast3k</a></p>
 						<p>Github <a href="https://github.com/real1510/multisig/">https://github.com/real1510/multisig/</a></p>
-=======
-					<div class="tab-pane tab-content" id="about">
-						<h2>About <small>open source bitcoin wallet</small></h2>
-						<p>Version 1.1 by <a href="https://bitcointalk.org/index.php?action=profile;u=34834" target="_blank">OutCast3k</a></p>
-						<p>Compatible with bitcoin-qt</p>
-						<p>Github <a href="https://github.com/OutCast3k/coinbin/">https://github.com/OutCast3k/coinbin/</a></p>
-						<p>TOR <a href="http://4zpinp6gdkjfplhk.onion">4zpinp6gdkjfplhk.onion</a></p>
-						<h3>Information</h3>
-						<p>Coinb.in is a free and open source project released under the MIT licence, originally by <a href="https://bitcointalk.org/index.php?action=profile;u=34834" target="_blank">OutCast3k</a> in 2013. Discussion of the project can be found at <a href="https://bitcointalk.org/index.php?topic=390046" target="_blank">bitcointalk.org</a> during its early testing stages when its primary focus was to develop a proof of concept multisig solution in javascript.</p>
-						<p>Coinb.in is run and funded by the generosity of others in terms of <a href="https://github.com/OutCast3k/coinbin/graphs/contributors" target="_blank">development</a> and hosting.</p>
-						<h3>Privacy</h3>
-						<p>Coinb.in beleives strongly in privacy, not only do we support the use of TOR, the site does not collect and store IP or transaction data via our servers nor do we store your bitcoins private key. We do use google analytics to track hits and route traffic via cloudflare using an SSL certificate.</p>
-						<h3>Donate</h3>
-						<p>Please donate to 1CWHWkTWaq1K5hevimJia3cyinQsrgXUvg if you found this project useful or want to see more features!</p>
->>>>>>> 235ae93... updated to the new bootstrap, given the home page a make over and a few other minor tweaks
 					</div>
 
 					<br>

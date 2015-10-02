@@ -1,7 +1,7 @@
 coinbin
 =======
 
-An Open Source Multisig Support Tool. Version 1.0 beta by real1510.
+An Open Source Multisig Support Tool. Version 1.1 by real1510.
 Forked from https://github.com/OutCast3k/coinbin/ by OutCast3k.
 
 Live version available at https://multisig.btcnet.eu/

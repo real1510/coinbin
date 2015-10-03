@@ -13,9 +13,6 @@
 	coinjs.multisig = 0x05;
 	coinjs.compressed = false;
 
-	/* bit(coinb.in) api vars */
-	coinjs.host = 'https://blockchain.info/';
-
 	/* start of address functions */
 
 	/* generate a private and public keypair, with address and WIF address */
@@ -366,7 +363,6 @@
 
 
 	/* start of script functions */
-
 	coinjs.script = function(data) {
 		var r = {};
 
@@ -596,17 +592,6 @@
 				return this.outs.push(o);
 			}
 			return r;
-		}
-
-		/* list unspent transactions */
-		r.listUnspent = function(address, callback) {
-			coinjs.ajax(coinjs.host + 'unspent?active=' + address + '&cors=true', callback, "GET");
-		}
-
-		/* broadcast a transaction */
-		r.broadcast = function(callback, txhex){
-			var tx = 'tx=' + (txhex || this.serialize());
-			coinjs.ajax(coinjs.host + 'pushtx?cors=true', callback, "POST", tx);
 		}
 
 		/* generate the transaction hash to sign from a transaction input */

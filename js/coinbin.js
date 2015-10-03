@@ -304,24 +304,20 @@ $(document).ready(function() {
 		key = '12345678901234567890123456789012';
 		$.ajax ({
 			type: "GET",
-			url: 'https://coinb.in/api/?uid='+uid+'&key='+key+'&setmodule=addresses&request=unspent&address='+address+'&r='+Math.random(),
+			url: 'https://coinb.in/api/?uid='+uid+'&key='+key+'&setmodule=addresses&request=unspent&address='+redeem.addr+'&r='+Math.random(),
 			dataType: "xml",
 			error: function(data) {
 				$("#redeemFromStatus").removeClass('hidden').html('<span class="glyphicon glyphicon-exclamation-sign"></span> Unexpected error, unable to retrieve unspent outputs!');
 			},
 			success: function(data) {
-				if(data.unspent_outputs){
-					$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://blockchain.info/address/'+redeem.addr+'" target="_blank">'+redeem.addr+'</a>');
-					$.each($(data).find("unspent").children(), function(i,o){
-						var tx = $(o).find("tx_hash").text();
-						var n = $(o).find("tx_output_n").text();
-						var script = (redeem.isMultisig==true) ? $("#redeemFrom").val() : $(o).find("script").text();
-						var amount = (($(o).find("value").text()*1)/100000000).toFixed(8);
-						addOutput(tx, n, script, amount);
-					});
-				} else {
-					$("#redeemFromStatus").removeClass('hidden').html('<span class="glyphicon glyphicon-exclamation-sign"></span> Unexpected error, unable to retrieve unspent outputs.');
-				}
+				$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://blockchain.info/address/'+redeem.addr+'" target="_blank">'+redeem.addr+'</a>');
+				$.each($(data).find("unspent").children(), function(i,o){
+					var tx = $(o).find("tx_hash").text();
+					var n = $(o).find("tx_output_n").text();
+					var script = (redeem.isMultisig==true) ? $("#redeemFrom").val() : $(o).find("script").text();
+					var amount = (($(o).find("value").text()*1)/100000000).toFixed(8);
+					addOutput(tx, n, script, amount);
+				});
 			},
 			complete: function(data, status) {
 				$("#redeemFromBtn").html("Load").attr('disabled',false);

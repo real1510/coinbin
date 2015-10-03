@@ -237,9 +237,9 @@ $(document).ready(function() {
 		$("#redeemFromBtn").html("Please wait, loading...").attr('disabled',true);
 
 		var host = $(this).attr('rel');
-		if(host=='blockr.io_bitcoinmainnet'){
+		if(host=='blockr.io'){
 			listUnspentBlockrio_BitcoinMainnet(redeem);
-		} else if(host=='coinb.in_bitcoinmainnet'){
+		} else if(host=='coinb.in'){
 			listUnspentCoinbin_BitcoinMainnet(redeem);
 		} else {
 			listUnspentBlockchaininfo_BitcoinMainnet(redeem);
@@ -451,7 +451,7 @@ $(document).ready(function() {
 		rawSubmitBlockchaininfo_BitcoinMainnet(this);
 	});
 
-	// broadcast transaction vai coinbin (mainnet)
+	// broadcast transaction via coinbin (mainnet)
 	function rawSubmitCoinbin_BitcoinMainnet(thisbtn){
 		uid = '1';
 		key = '12345678901234567890123456789012';
@@ -511,7 +511,7 @@ $(document).ready(function() {
 		});
 	}
 
-	// broadcast transaction vai blockchain.info (mainnet, default)
+	// broadcast transaction via blockchain.info (mainnet, default)
 	function rawSubmitBlockchaininfo_BitcoinMainnet(thisbtn){
 		$(thisbtn).val('Please wait, loading...').attr('disabled',true);
 		$.ajax ({
@@ -828,6 +828,46 @@ $(document).ready(function() {
 	}
 
 	validateOutputAmount();
+
+	/* settings page code */
+
+	$("#settingsBtn").click(function(){
+
+		$("#statusSettings").removeClass("alert-success").removeClass("alert-danger").addClass("hidden").html("");
+		$("#settings .has-error").removeClass("has-error");
+
+		if($("#settings .has-error").length==0){
+
+			configureBroadcast();
+			configureGetUnspentTx();
+
+			$("#statusSettings").addClass("alert-success").removeClass("hidden").html("<span class=\"glyphicon glyphicon-ok\"></span> Settings updates successfully").fadeOut().fadeIn();	
+		} else {
+			$("#statusSettings").addClass("alert-danger").removeClass("hidden").html("There is an error with one or more of your settings");	
+		}
+	});
+
+	function configureBroadcast(){
+		var host = $("#coinjs_broadcast option:selected").val();
+		$("#rawSubmitBtn").unbind("");
+		if(host=="coinb.in"){
+			$("#rawSubmitBtn").click(function(){
+				rawSubmitCoinbin_BitcoinMainnet(this);
+			});
+		} else if(host=="blockr.io"){
+			$("#rawSubmitBtn").click(function(){
+				rawSubmitBlockrio_BitcoinMainnet(this);
+			});
+		} else {
+			$("#rawSubmitBtn").click(function(){
+				rawSubmitBlockchaininfo_BitcoinMainnet(this); // revert to default
+			});
+		}
+	}
+
+	function configureGetUnspentTx(){
+		$("#redeemFromBtn").attr('rel',$("#coinjs_utxo option:selected").val());
+	}
 
 	/* capture mouse movement to add entropy */
 	var IE = document.all?true:false // Boolean, is browser IE?

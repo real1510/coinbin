@@ -50,6 +50,8 @@
 							<li><a href="#verify" data-toggle="tab"><span class="glyphicon glyphicon-ok"></span> Verify</a></li>
 							<li><a href="#sign" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Sign</a></li>
 							<li><a href="#broadcast" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Broadcast</a></li>
+
+							<li class="hidden"><a href="#settings" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 						</ul>
 					</div>
 				</div>
@@ -214,6 +216,12 @@
 								<label>Lock Time</label>
 								<p>The <a href="https://bitcoin.org/en/developer-guide#locktime-and-sequence-number">locktime</a> indicates the earliest time a transaction can be added to the block chain.</p>
 								<input type="text" class="form-control" value="0" id="nLockTime">
+
+								<hr>
+
+
+								<label>Network</label>
+								<p>The <a href="#settings">settings</a> page can be used to select alternative networks of which you can retrieve your unspent outputs and broadcast a signed transaction into.</p>
 
 								<hr>
 							</div>
@@ -477,10 +485,50 @@
 
 					<div class="tab-pane tab-content active" id="about">
 						<h2>About <small>open source bitcoin multisig support</small></h2>
-						<p>Version 1.1 by <a href="https://bitcointalk.org/index.php?action=profile;u=17239" target="_blank">real1510</a></p>
+						<p>Version 1.2 by <a href="https://bitcointalk.org/index.php?action=profile;u=17239" target="_blank">real1510</a></p>
 						<p>Compatible with bitcoin-qt</p>
 						<p>Forked from the original version by <a href="https://bitcointalk.org/index.php?action=profile;u=34834" target="_blank">OutCast3k</a></p>
 						<p>Github <a href="https://github.com/real1510/multisig/">https://github.com/real1510/multisig/</a></p>
+					</div>
+
+					<div class="tab-pane tab-content" id="settings">
+						<h2>Settings <small> customize the network settings!</small></h2>
+
+						<div class="row">
+							<div class="col-md-12">
+								<b>Broadcast</b>: <br>
+								<p class="text-muted">Select the network you wish to broadcast the transaction via</p>
+								<select class="form-control" id="coinjs_broadcast">
+									<option value="blockchain.info">blockchain.info</option>
+									<option value="coinb.in">coinb.in</option>
+									<option value="blockr.io">blockr.io</option>
+								</select>
+							</div>
+						</div>
+							
+						<hr>
+
+						<div class="row">
+							<div class="col-md-12">
+								<b>Unspent outputs</b>: <br>
+								<p class="text-muted">Select the network you wish to retreive your unspent inputs from</p>
+								<select class="form-control" id="coinjs_utxo">
+									<option value="blockchain.info">blockchain.info</option>
+									<option value="coinb.in">coinb.in</option>
+									<option value="blockr.io">blockr.io</option>
+								</select>
+							</div>
+						</div>
+
+						<hr>
+
+						<br>
+
+						<div id="statusSettings" class="hidden alert">
+						</div>
+
+						<input type="button" class="btn btn-primary" value="Change" id="settingsBtn">
+
 					</div>
 
 					<br>
@@ -493,7 +541,7 @@
 
 		<div id="footer">
 			<div class="container text-right">
-	        		<p class="text-muted">Version 1.1</p>
+	        		<p class="text-muted">Version 1.2</p>
 			</div>
 		</div>
 

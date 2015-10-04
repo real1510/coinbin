@@ -281,7 +281,7 @@ $(document).ready(function() {
 	}
 
 	/* global function to add outputs to page */
-	function addOutput(tx, n, script, amount) {
+	function addOutput(tx, n, script, amount, reverse){
 		if(tx){
 			if($("#inputs .txId:last").val()!=""){
 				$("#inputs .txidAdd").click();
@@ -289,7 +289,10 @@ $(document).ready(function() {
 
 			$("#inputs .row:last input").attr('disabled',true);
 
-			var txid = ((tx).match(/.{1,2}/g).reverse()).join("")+'';
+			var txid = tx;
+			if(reverse){
+				txid = ((tx).match(/.{1,2}/g).reverse()).join("")+'';
+			}
 
 			$("#inputs .txId:last").val(txid);
 			$("#inputs .txIdN:last").val(n);
@@ -316,7 +319,7 @@ $(document).ready(function() {
 					var n = $(o).find("tx_output_n").text();
 					var script = (redeem.isMultisig==true) ? $("#redeemFrom").val() : $(o).find("script").text();
 					var amount = (($(o).find("value").text()*1)/100000000).toFixed(8);
-					addOutput(tx, n, script, amount);
+					addOutput(tx, n, script, amount, true);
 				});
 			},
 			complete: function(data, status) {
@@ -329,7 +332,7 @@ $(document).ready(function() {
 	/* retrieve unspent data from blockrio for mainnet */
 	function listUnspentBlockrio_BitcoinMainnet(redeem){
 		$.ajax ({
-			type: "POST",
+			type: "GET",
 			url: "https://btc.blockr.io/api/v1/address/unspent/"+redeem.addr+"?unconfirmed=1",
 			dataType: "json",
 			error: function(data) {
@@ -344,7 +347,7 @@ $(document).ready(function() {
 						var n = o.n;
 						var script = (redeem.isMultisig==true) ? $("#redeemFrom").val() : o.script;
 						var amount = o.amount;
-						addOutput(tx, n, script, amount);
+						addOutput(tx, n, script, amount, false);
 					}
 				} else {
 					$("#redeemFromStatus").removeClass('hidden').html('<span class="glyphicon glyphicon-exclamation-sign"></span> Unexpected error, unable to retrieve unspent outputs.');
@@ -371,11 +374,11 @@ $(document).ready(function() {
 					$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://blockchain.info/address/'+redeem.addr+'" target="_blank">'+redeem.addr+'</a>');
 					for(var i in data.unspent_outputs){
 						var o = data.unspent_outputs[i];
-						var tx = o.tx_hash;
+						var tx = o.tx_hash_big_endian;
 						var n = o.tx_output_n;
 						var script = (redeem.isMultisig==true) ? $("#redeemFrom").val() : o.script;
 						var amount = (o.value / 100000000);
-						addOutput(tx, n, script, amount);
+						addOutput(tx, n, script, amount, false);
 					}
 				} else {
 					$("#redeemFromStatus").removeClass('hidden').html('<span class="glyphicon glyphicon-exclamation-sign"></span> Unexpected error, unable to retrieve unspent outputs.');

@@ -371,7 +371,7 @@ $(document).ready(function() {
 					$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://blockchain.info/address/'+redeem.addr+'" target="_blank">'+redeem.addr+'</a>');
 					for(var i in data.unspent_outputs){
 						var o = data.unspent_outputs[i];
-						var tx = o.tx_hash_big_endian;
+						var tx = o.tx_hash;
 						var n = o.tx_output_n;
 						var script = (redeem.isMultisig==true) ? $("#redeemFrom").val() : o.script;
 						var amount = (o.value / 100000000);

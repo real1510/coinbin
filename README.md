@@ -35,6 +35,7 @@ Coinb.in supports a number of key features such as:
 
 Changes:
 
-- Remove Wallet function and LocalBitcoins link.
+- Remove wallet function and LocalBitcoins link.
 - Use blockchain.info to load unspent transactions and to push transactions.
+- Remove fee calculator.
 

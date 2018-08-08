@@ -1,7 +1,7 @@
 coinbin
 =======
 
-An Open Source Multisig Support Tool. Version 1.2 by real1510.
+An Open Source Multisig Support Tool. Version 1.3 by real1510.
 Forked from https://github.com/OutCast3k/coinbin/ by OutCast3k.
 
 Live version available at https://multisig.btcnet.eu/
@@ -24,6 +24,14 @@ Coinb.in supports a number of key features such as:
 - Support current Dark Wallet Stealth Address structure (as of version Alpha 7) for outputs.
 - Brain wallet support.
 - Compatible with bitcoin-qt
+- An offical .onion address for tor users.
+- Offline qrcode creator and scanning tool
+- HD (bip32) support
+- Supports altcoins such as litecoin
+- Replace by fee (RBF) Support
+- Segwit Support
+- Bech32 address support
+- Fee calculator - https://coinb.in/#fees
 
 Changes:
 
